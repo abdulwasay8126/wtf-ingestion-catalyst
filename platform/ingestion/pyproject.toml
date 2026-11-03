@@ -1,0 +1,76 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wtf-ingestion"
+version = "0.1.0"
+description = "Deterministic public-event ingestion for World Trade Factory"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "alembic>=1.16,<2",
+  "fastapi>=0.116,<1",
+  "httpx>=0.28,<1",
+  "icalendar>=6.3,<7",
+  "jinja2>=3.1,<4",
+  "pydantic>=2.11,<3",
+  "pydantic-settings>=2.10,<3",
+  "psycopg[binary]>=3.2,<4",
+  "python-dateutil>=2.9,<3",
+  "selectolax>=0.3,<1",
+  "sqlalchemy>=2.0,<3",
+  "structlog>=25.4,<26",
+  "typer>=0.16,<1",
+  "uvicorn>=0.35,<1",
+  "pypdf>=6.19,<7",
+  "pillow>=12,<13",
+]
+
+[project.optional-dependencies]
+dev = [
+  "bandit>=1.8,<2",
+  "freezegun>=1.5,<2",
+  "mypy>=1.17,<2",
+  "pip-audit>=2.9,<3",
+  "pytest>=9.0.3,<10",
+  "pytest-cov>=6.2,<7",
+  "respx>=0.22,<1",
+  "ruff>=0.12,<1",
+  "types-python-dateutil>=2.9,<3",
+  "types-icalendar>=6.3,<7",
+]
+
+[project.scripts]
+wtf-ingestion = "wtf_ingestion.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wtf_ingestion"]
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-markers --disable-warnings"
+testpaths = ["tests"]
+markers = ["postgres: requires the local PostgreSQL service"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+# Retained runtime evidence and diagnostic source snapshots are not working code.
+# Keep them unchanged for audit; lint source, tests, scripts and migrations normally.
+extend-exclude = ["outputs", "raw", "backups"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "RUF"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/wtf_ingestion/operations/web.py" = ["B008"]
+"src/wtf_ingestion/operations/frontend.py" = ["B008"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+packages = ["wtf_ingestion"]
+
+[tool.bandit]
+exclude_dirs = ["tests"]

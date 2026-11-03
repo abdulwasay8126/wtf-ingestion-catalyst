@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "catalyst-doot"
+version = "0.1.0"
+description = "Catalyst Doot earnings dashboard over verified ingestion publications"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "wtf-ingestion==0.1.0",
+  "fastapi>=0.116,<1",
+  "jinja2>=3.1,<4",
+  "uvicorn>=0.35,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "freezegun>=1.5,<2",
+  "httpx>=0.28,<1",
+  "mypy>=1.17,<2",
+  "pytest>=9.0.3,<10",
+  "ruff>=0.12,<1",
+]
+
+[project.scripts]
+catalyst-doot = "catalyst_doot.cli:main"
+
+[tool.uv.sources]
+wtf-ingestion = { path = "../ingestion", editable = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/catalyst_doot"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "pyproject.toml", "uv.lock", ".env.example"]
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-markers --disable-warnings"
+testpaths = ["tests"]
+markers = ["postgres: requires an isolated migrated PostgreSQL database"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "RUF"]
+ignore = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["catalyst_doot"]
+mypy_path = "../ingestion/src"
+follow_imports = "silent"

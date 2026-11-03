@@ -1,0 +1,50 @@
+name: dev0sim-earnings-collector
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: wtf_ingestion
+      POSTGRES_USER: wtf
+      # Local development only. Deployment requires authenticated PostgreSQL settings.
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "127.0.0.1:${WTF_POSTGRES_PORT:-55433}:5432"
+    volumes:
+      - earnings_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wtf -d wtf_ingestion"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+
+  app:
+    profiles: ["tools"]
+    build: .
+    environment:
+      WTF_DATABASE_URL: postgresql+psycopg://wtf@postgres:5432/wtf_ingestion
+      WTF_RAW_DIR: ${WTF_RAW_DIR:-raw}
+      WTF_OUTPUT_DIR: ${WTF_OUTPUT_DIR:-outputs/publications}
+      WTF_DASHBOARD_MODE: ${WTF_DASHBOARD_MODE:-fixture}
+      WTF_UNIVERSE_FILE:
+      WTF_ENABLE_LIVE_SEC: ${WTF_ENABLE_LIVE_SEC:-false}
+      WTF_SEC_USER_AGENT:
+      WTF_ENABLE_SEC_ESTIMATES: ${WTF_ENABLE_SEC_ESTIMATES:-false}
+      WTF_ENABLE_SEC_OCR: ${WTF_ENABLE_SEC_OCR:-false}
+      WTF_ENABLE_LIVE_ALPACA: ${WTF_ENABLE_LIVE_ALPACA:-false}
+      WTF_ALPACA_API_KEY: ${WTF_ALPACA_API_KEY:-}
+      WTF_ALPACA_API_SECRET: ${WTF_ALPACA_API_SECRET:-}
+      WTF_ALPACA_RIGHTS_REFERENCE: ${WTF_ALPACA_RIGHTS_REFERENCE:-}
+      WTF_ALPACA_RIGHTS_DATASETS: ${WTF_ALPACA_RIGHTS_DATASETS:-[]}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./outputs:/app/outputs
+      - ./raw:/app/raw
+      - ./config:/app/config:ro
+    command: ["status"]
+
+volumes:
+  earnings_postgres_data:

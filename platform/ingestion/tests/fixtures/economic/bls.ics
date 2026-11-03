@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//BLS Fixture//Release Calendar//EN
+BEGIN:VEVENT
+UID:bls-empsit-2026-10
+DTSTAMP:20260930T120000Z
+DTSTART;TZID=America/New_York:20261002T083000
+SUMMARY:Employment Situation for September 2026
+URL:https://www.bls.gov/schedule/news_release/empsit.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:bls-cpi-2026-10
+DTSTAMP:20260930T120000Z
+DTSTART;TZID=America/New_York:20261014T083000
+SUMMARY:Consumer Price Index for September 2026
+URL:https://www.bls.gov/schedule/news_release/cpi.htm
+END:VEVENT
+END:VCALENDAR

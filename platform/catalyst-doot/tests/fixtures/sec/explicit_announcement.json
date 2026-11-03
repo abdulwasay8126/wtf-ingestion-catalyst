@@ -1,0 +1,35 @@
+{
+  "fixture": true,
+  "filings": [
+    {
+      "accession_number": "0000320193-26-000099",
+      "exhibit_sequence": "1",
+      "form": "8-K",
+      "items": ["2.02", "9.01"],
+      "filed_at": "2026-09-30T10:00:00-04:00",
+      "ticker": "AAPL",
+      "exchange": "NASDAQ",
+      "company_name": "Apple Inc.",
+      "cik": "320193",
+      "title": "Apple to report fourth quarter 2026 results",
+      "fiscal_period": "Q4 FY2026",
+      "exhibit_url": "https://www.sec.gov/Archives/edgar/data/320193/fixture/ex99-1.htm",
+      "exhibit_text": "Apple Inc. will release its fourth quarter fiscal 2026 results on October 29, 2026 at 4:30 p.m. ET after the market close."
+    },
+    {
+      "accession_number": "0000789019-26-000088",
+      "exhibit_sequence": "1",
+      "form": "8-K",
+      "items": ["2.02"],
+      "filed_at": "2026-09-30T16:00:00-04:00",
+      "ticker": "MSFT",
+      "exchange": "NASDAQ",
+      "company_name": "Microsoft Corporation",
+      "cik": "789019",
+      "title": "Quarterly results furnished",
+      "fiscal_period": "Q1 FY2027",
+      "exhibit_url": "https://www.sec.gov/Archives/edgar/data/789019/fixture/ex99-1.htm",
+      "exhibit_text": "Microsoft furnished results for the quarter ended September 30, 2026."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//BEA Fixture//Release Calendar//EN
+BEGIN:VEVENT
+UID:bea-gdp-2026-q3-advance
+DTSTAMP:20260930T120000Z
+DTSTART;TZID=America/New_York:20261029T083000
+SUMMARY:GDP Advance Estimate Third Quarter 2026
+URL:https://www.bea.gov/news/schedule
+END:VEVENT
+END:VCALENDAR
